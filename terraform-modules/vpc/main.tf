@@ -42,6 +42,8 @@ resource "aws_docdb_subnet_group" "docdb_subnets" {
 resource "aws_security_group" "documentdb_sg" {
   name = "${local.app_prefix}${terraform.workspace}-docdb-sg"
 
+  vpc_id = module.karaoke_vpc.vpc_id
+
   ingress {
     from_port = var.docdb_port 
     to_port = var.docdb_port 

@@ -23,10 +23,10 @@ variable "port" {
 }
 
 variable "subnet_group_name" {
-    default = ""
+    default = "karaoke-base-infrastructure-vpc-dev-docb-subs"
 }
 
 variable "security_group_ids" {
     type = list(string)
-    default = ["sg-0f88ec60228e7f6c9"]
+    default = ["sg-0066bb743ca1b93bc"]
 }
