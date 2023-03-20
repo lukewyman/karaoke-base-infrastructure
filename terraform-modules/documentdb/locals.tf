@@ -1,4 +1,4 @@
 locals {
 
-    app_prefix = "karaoke-base-infrastructure-docdb-"
+  app_prefix = "karaoke-base-infrastructure-docdb-"
 }

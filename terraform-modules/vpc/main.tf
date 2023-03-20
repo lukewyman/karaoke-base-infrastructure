@@ -13,7 +13,7 @@ module "karaoke_vpc" {
 }
 
 resource "aws_docdb_subnet_group" "docdb_subnets" {
-  name = "${local.app_prefix}${terraform.workspace}-docb-subs"
+  name       = "${local.app_prefix}${terraform.workspace}-docb-subs"
   subnet_ids = slice(module.karaoke_vpc.private_subnets, 2, 4)
 }
 
@@ -29,10 +29,24 @@ resource "aws_docdb_subnet_group" "docdb_subnets" {
 #   vpc_endpoint_type = "Interface"
 # }
 
-# resource "aws_security_group" "bastion_sg" {
-#   name = "${local.app_prefix}${terraform.workspace}-bastion-sg"
+resource "aws_security_group" "bastion_sg" {
+  name   = "${local.app_prefix}${terraform.workspace}-bastion-sg"
+  vpc_id = module.karaoke_vpc.vpc_id
 
-# }
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 
 # resource "aws_security_group" "ecs_sg" {
 #   name = "${local.app_prefix}${terraform.workspace}-ecs-sg"
@@ -40,14 +54,13 @@ resource "aws_docdb_subnet_group" "docdb_subnets" {
 # }
 
 resource "aws_security_group" "documentdb_sg" {
-  name = "${local.app_prefix}${terraform.workspace}-docdb-sg"
-
+  name   = "${local.app_prefix}${terraform.workspace}-docdb-sg"
   vpc_id = module.karaoke_vpc.vpc_id
 
   ingress {
-    from_port = var.docdb_port 
-    to_port = var.docdb_port 
-    protocol = "tcp"
+    from_port = var.docdb_port
+    to_port   = var.docdb_port
+    protocol  = "tcp"
     cidr_blocks = concat(
       module.karaoke_vpc.public_subnets_cidr_blocks,
       slice(module.karaoke_vpc.private_subnets_cidr_blocks, 0, 2)
@@ -55,9 +68,9 @@ resource "aws_security_group" "documentdb_sg" {
   }
 
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = -1
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
