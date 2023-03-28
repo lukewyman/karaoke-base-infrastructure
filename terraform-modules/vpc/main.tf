@@ -12,10 +12,10 @@ module "karaoke_vpc" {
   enable_vpn_gateway = false
 }
 
-resource "aws_docdb_subnet_group" "docdb_subnets" {
-  name       = "${local.app_prefix}${terraform.workspace}-docb-subs"
-  subnet_ids = slice(module.karaoke_vpc.private_subnets, 2, 4)
-}
+# resource "aws_docdb_subnet_group" "docdb_subnets" {
+#   name       = "${local.app_prefix}${terraform.workspace}-docb-subs"
+#   subnet_ids = slice(module.karaoke_vpc.private_subnets, 2, 4)
+# }
 
 # resource "aws_vpc_endpoint" "s3_endpoint" {
 #   vpc_id = module.karaoke_vpc.vpc_id 

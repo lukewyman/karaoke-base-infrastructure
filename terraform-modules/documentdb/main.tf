@@ -6,7 +6,7 @@ resource "aws_docdb_cluster" "docdb" {
   master_password        = data.aws_ssm_parameter.mongo_password.value
   deletion_protection    = false
   port                   = var.port
-  db_subnet_group_name   = var.subnet_group_name
+  db_subnet_group_name   = aws_docdb_subnet_group.docdb_subnets.name 
   vpc_security_group_ids = var.security_group_ids
   skip_final_snapshot    = true
   storage_encrypted      = false
@@ -19,11 +19,9 @@ resource "aws_docdb_cluster_instance" "cluster_instances" {
   instance_class     = var.instance_class
 }
 
-# resource "null_resource" "enable_change_streams" {
-#   connection {
-#     type = "ssh"
-#     user = "ubuntu"
-#     host = var.bastion_public_ip
-#     aws_key_pair = 
-#   }
-# }
+resource "aws_docdb_subnet_group" "docdb_subnets" {
+  name       = "${local.app_prefix}${terraform.workspace}-subnet-group"
+  subnet_ids = var.db_subnet_ids
+}
+
+
