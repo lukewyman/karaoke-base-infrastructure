@@ -17,6 +17,6 @@ dependency "documentdb" {
 inputs = {
     aws_region = "us-west-2"
     instance_type = "t2.micro"
-    subnet_id = dependency.vpc.outputs.bastion_subnet_id
+    subnet_ids = dependency.vpc.outputs.public_subnet_ids
     security_group_id = dependency.vpc.outputs.bastion_security_group_id
 }
