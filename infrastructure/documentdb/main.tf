@@ -8,9 +8,31 @@ resource "aws_docdb_cluster" "docdb" {
   deletion_protection             = false
   port                            = var.port
   db_subnet_group_name            = aws_docdb_subnet_group.docdb_subnets.name
-  vpc_security_group_ids          = var.security_group_ids
+  vpc_security_group_ids          = [aws_security_group.documentdb_sg.id]
   skip_final_snapshot             = true
   storage_encrypted               = false
+}
+
+resource "aws_security_group" "documentdb_sg" {
+  name   = "${local.app_prefix}${terraform.workspace}-docdb-sg"
+  vpc_id = var.vpc_id
+
+  ingress {
+    from_port = var.port
+    to_port   = var.port
+    protocol  = "tcp"
+    cidr_blocks = concat(
+      var.public_subnet_cidr_blocks,
+      var.app_subnet_cidr_blocks
+    )
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_docdb_cluster_parameter_group" "docdb_parameter_group" {

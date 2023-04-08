@@ -3,7 +3,7 @@ include {
 }
 
 terraform {
-    source = "${get_parent_terragrunt_dir("root")}/../terraform-modules/ec2"
+    source = "${get_parent_terragrunt_dir("root")}/../infrastructure/ec2"
 }
 
 dependency "vpc" {
@@ -17,6 +17,6 @@ dependency "documentdb" {
 inputs = {
     aws_region = "us-west-2"
     instance_type = "t2.micro"
+    vpc_id = dependency.vpc.outputs.vpc_id
     subnet_ids = dependency.vpc.outputs.public_subnet_ids
-    security_group_id = dependency.vpc.outputs.bastion_security_group_id
 }

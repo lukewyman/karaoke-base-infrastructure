@@ -3,7 +3,7 @@ include {
 }
 
 terraform {
-    source = "${get_parent_terragrunt_dir("root")}/../terraform-modules/documentdb"
+    source = "${get_parent_terragrunt_dir("root")}/../infrastructure/documentdb"
 }
 
 dependency "vpc" {
@@ -16,6 +16,8 @@ inputs = {
     instance_class = "db.t3.medium"
     instance_count = 1
     port = 27017
+    vpc_id = dependency.vpc.outputs.vpc_id
+    public_subnet_cidr_blocks = dependency.vpc.outputs.public_subnet_cidr_blocks
+    app_subnet_cidr_blocks = dependency.vpc.outputs.app_subnet_cidr_blocks
     db_subnet_ids = dependency.vpc.outputs.db_subnet_ids
-    security_group_ids = [dependency.vpc.outputs.docdb_security_group_id]   
 }

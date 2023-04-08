@@ -17,10 +17,18 @@ variable "port" {
   description = "Port for DocumentDB cluster"
 }
 
-variable "db_subnet_ids" {
-  type = set(string)
+variable "vpc_id" {
+  type = string 
 }
 
-variable "security_group_ids" {
+variable "public_subnet_cidr_blocks" {
+  type = list(string)
+}
+
+variable "app_subnet_cidr_blocks" {
+  type = list(string)
+}
+
+variable "db_subnet_ids" {
   type = list(string)
 }

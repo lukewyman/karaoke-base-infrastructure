@@ -3,7 +3,7 @@ include "root" {
 }
 
 terraform {
-    source = "${get_parent_terragrunt_dir("root")}/../terraform-modules/vpc"
+    source = "${get_parent_terragrunt_dir("root")}/../infrastructure/vpc"
 }
 
 inputs = {
