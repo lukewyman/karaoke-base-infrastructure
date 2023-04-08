@@ -22,8 +22,8 @@ resource "aws_security_group" "documentdb_sg" {
     to_port   = var.port
     protocol  = "tcp"
     cidr_blocks = concat(
-      var.public_subnet_cidr_blocks,
-      var.app_subnet_cidr_blocks
+      var.public_subnets_cidr_blocks,
+      var.app_subnets_cidr_blocks
     )
   }
 
@@ -54,7 +54,7 @@ resource "aws_docdb_cluster_instance" "cluster_instances" {
 
 resource "aws_docdb_subnet_group" "docdb_subnets" {
   name       = "${local.app_prefix}${terraform.workspace}-subnet-group"
-  subnet_ids = var.db_subnet_ids
+  subnet_ids = var.db_subnets_ids
 }
 
 resource "aws_ssm_parameter" "docdb_username" {

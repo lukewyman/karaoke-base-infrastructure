@@ -21,14 +21,14 @@ variable "vpc_id" {
   type = string 
 }
 
-variable "public_subnet_cidr_blocks" {
+variable "public_subnets_cidr_blocks" {
   type = list(string)
 }
 
-variable "app_subnet_cidr_blocks" {
+variable "app_subnets_cidr_blocks" {
   type = list(string)
 }
 
-variable "db_subnet_ids" {
+variable "db_subnets_ids" {
   type = list(string)
 }

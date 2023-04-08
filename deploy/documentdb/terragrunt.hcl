@@ -17,7 +17,7 @@ inputs = {
     instance_count = 1
     port = 27017
     vpc_id = dependency.vpc.outputs.vpc_id
-    public_subnet_cidr_blocks = dependency.vpc.outputs.public_subnet_cidr_blocks
-    app_subnet_cidr_blocks = dependency.vpc.outputs.app_subnet_cidr_blocks
-    db_subnet_ids = dependency.vpc.outputs.db_subnet_ids
+    public_subnets_cidr_blocks = dependency.vpc.outputs.public_subnets_cidr_blocks
+    app_subnets_cidr_blocks = dependency.vpc.outputs.app_subnets_cidr_blocks
+    db_subnets_ids = dependency.vpc.outputs.db_subnets_ids
 }
